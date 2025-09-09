@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center">
+    <h1 class="text-center">Welcome To The Sci-Fi Quotes</h1>
+</div>
+
+<div class="container-md">
+  <p class="text-center" class="fs-3">Welcome To The Sci-Fi Quotes. If you would like to see a Sci-Fi Quote. Please press the button below</p>
+</div>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="{{ url_for('quote') }}" role="button">Show Me A Quote</a>
+</div>
+
+
+{% endblock %}
