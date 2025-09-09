@@ -12,17 +12,12 @@
     <h1 class="text-center">Welcome To The Sci-Fi Quotes</h1>
 </div>
 
-<figure class="text-center">
-    <p>A well-known quote, contained in a blockquote element.</p>
-  <figcaption class="blockquote-footer">
-    Someone famous in <cite title="Source Title">Source Title</cite>
-  </figcaption>
-</figure>
+<!-- <figure class="text-center">
+    <p id="quote-text">Welcome To The Sci-Fi Quotes. If you would like to see a Sci-Fi Quote. Please press the button below</p>
+  <figcaption class="blockquote-footer d-none" id="quote-origin"></figcaption>
+</figure> -->
 
-<!-- <div class="container-md">
-  <p class="text-center" id="quote-text">Welcome To The Sci-Fi Quotes. If you would like to see a Sci-Fi Quote. Please press the button below</p>
-
-</div> -->
+<p class="text-center" id="quote-figure">Welcome To The Sci-Fi Quotes. If you would like to see a Sci-Fi Quote. Please press the button below</p>
 
 <div class="text-center">
     <button class="btn btn-primary" onclick="quote()">Get A Sci-Fi Quote</button>
@@ -32,8 +27,25 @@
         fetch("/quote")
         .then(response => response.json())
         .then(json => {
-            document.getElementById('quote-text').innerText = json.quote;
-    });
+            let figure = document.getElementById('quote-figure');
+        // change <p> to backquotes figure if not already
+            if (figure.tagName.toLowerCase() == "p") {
+                figure.outerHTML = `
+                <figure class="text-center" id="quote-figure">
+                    <blockquote class="blockquote">
+                        <p id="quote-text">${json.quote}</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer" id="quote-origin">
+                        ${json.author}, <cite title="${json.book}">${json.book}</cite>
+                    </figcaption>
+                </figure>
+                `
+            } else {
+                // if figure already is used
+                document.getElementById("quote-text").innerText = `"${json.quote}"`;
+                document.getElementById("quote-origin").innerText = `"${json.author}", "${json.book}"`;
+            }
+        });
     }
     
 </script>
