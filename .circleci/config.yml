@@ -2,7 +2,7 @@ version: 2.1
 executors:
   flask-executor:
     docker:
-      - image: mcr.microsoft.com/playwright/python:v1.54.0-noble
+      - image: mcr.microsoft.com/playwright/python:v1.55.0-noble
 jobs:
   backend_test:
     executor: flask-executor
@@ -14,6 +14,9 @@ jobs:
       - run:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
+      - run:
+          name: Find PIP packeges location
+          command: find / -name flask*
       - run:
           name: Run Backend tests
           command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
