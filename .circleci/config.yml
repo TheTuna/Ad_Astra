@@ -9,5 +9,5 @@ jobs:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
       - run:
-          name: Flask Auto Tests
-          command: flask run &
+          name: Run WebApp Autotest
+          command: pytest -v
