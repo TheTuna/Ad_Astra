@@ -9,8 +9,10 @@ jobs:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
       - run:
-          name: Install Chromium for store_test
-          command: playwright install
+          name: Install Chromium for running tests
+          command: |
+            playwright install
+            playwright install-deps
       - run:
           name: Run WebApp Autotest
           command: pytest -v
