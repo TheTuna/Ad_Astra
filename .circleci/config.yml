@@ -21,3 +21,9 @@ jobs:
       - run:
           name: Find PIP packeges location
           command: find / -name flask*
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - backend_test
