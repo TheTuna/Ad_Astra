@@ -1,18 +1,23 @@
 version: 2.1
-jobs:
-  build:
+executors:
+  flask-executor:
     docker:
-      - image: python:3
+      - image: playwright/firefox
+jobs:
+  backend_test:
+    executor: flask-executor
     steps:
       - checkout
+      # - restore_cache:
+      #     keys:
+      #       - ad-astra-${CIRCLE_BRANCH}-{{checksum requirements.txt}}
       - run:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
       - run:
-          name: Install Chromium for running tests
-          command: |
-            playwright install
-            playwright install-deps
+          name: Run Backend tests
+          command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
+      # - save_cache:
       - run:
-          name: Run WebApp Autotest
-          command: pytest -v
+          name: Find PIP packeges location
+          command: find / -name flask*
