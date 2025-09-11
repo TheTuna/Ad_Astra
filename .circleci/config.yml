@@ -19,15 +19,21 @@ jobs:
           command: pip show flask
       - run:
           name: Echo vars
-          command: touch ${CIRCLE_BRANCH}-${CIRCLE_WORKFLOW_JOB_ID} 
+          command: touch ${CIRCLE_BRANCH}-${CIRCLE_WORKFLOW_JOB_ID}
+      - run:
+          name: echo vars 2
+          command: touch $(echo CIRCLE_BRANCH)-$(echo CIRCLE_WORKFLOW_JOB_ID)
+      - run:
+          name: check filename
+          command: ls -la .
          
-      # - run:
-      #     name: Run Backend tests
-      #     command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
-      # - save_cache:
-      #     key: ad-astra-${CIRCLE_BRANCH}-{{checksum "requirements.txt"}}
-      #     paths:
-      #       - usr/local/lib/python3.12/dist-packages
+      - run:
+          name: Run Backend tests
+          command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
+      - save_cache:
+          key: ad-astra-${CIRCLE_BRANCH}-{{checksum "requirements.txt"}}
+          paths:
+            - /usr/local/lib/python3.12/dist-packages
 
 workflows:
   version: 2
