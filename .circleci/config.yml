@@ -2,7 +2,7 @@ version: 2.1
 executors:
   flask-executor:
     docker:
-      - image: playwright/firefox
+      - image: mcr.microsoft.com/playwright/python:v1.54.0-noble
 jobs:
   backend_test:
     executor: flask-executor
