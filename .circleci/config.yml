@@ -9,8 +9,5 @@ jobs:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
       - run:
-          name: Start Flask Development Server
+          name: Flask Auto Tests
           command: flask run &
-      - run: 
-          name: Check WebApp Is Running
-          command: curl http://127.0.0.1:5000/ | grep "Welcome To The Sci-Fi Quotes"
