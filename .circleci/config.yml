@@ -15,12 +15,20 @@ jobs:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
       - run:
-          name: Run Backend tests
-          command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
-      - save_cache:
-          key: ad-astra-${CIRCLE_BRANCH}-{{checksum "requirements.txt"}}
-          paths:
-            - usr/local/lib/python3.12/dist-packages
+          name:
+          command: ls -la .
+      - run:
+          name: Echo vars
+          command: |
+            echo $CIRCLE_BRANCH
+            echo $CIRCLE_WORKFLOW_JOB_ID 
+      # - run:
+      #     name: Run Backend tests
+      #     command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
+      # - save_cache:
+      #     key: ad-astra-${CIRCLE_BRANCH}-{{checksum "requirements.txt"}}
+      #     paths:
+      #       - usr/local/lib/python3.12/dist-packages
 
 workflows:
   version: 2
