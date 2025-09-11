@@ -15,13 +15,12 @@ jobs:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
       - run:
-          name:
-          command: ls -la .
+          name: pip location
+          command: pip show flask
       - run:
           name: Echo vars
-          command: |
-            echo $CIRCLE_BRANCH
-            echo $CIRCLE_WORKFLOW_JOB_ID 
+          command: touch ${CIRCLE_BRANCH}-${CIRCLE_WORKFLOW_JOB_ID} 
+         
       # - run:
       #     name: Run Backend tests
       #     command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
