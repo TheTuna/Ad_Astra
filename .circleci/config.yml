@@ -10,7 +10,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v2.2-{{ checksum "requirements.txt" }}
+            - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
       - run:
           name: Install Flask App Rquirements
           command: |
@@ -19,18 +19,18 @@ jobs:
       - run:
           name: Show pytest executable dir
           command: pip show pytest playwright
-      # - run:
-      #     name: Install Playwright Dependencies
-      #     command: |
-      #       playwright install
-      #       playwright install-deps
+      - run:
+          name: Install Playwright Dependencies
+          command: |
+            playwright install
+            playwright install-deps
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
       - save_cache:
-          key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v2.2-{{ checksum "requirements.txt" }}
+          key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
           paths:
-            - /usr/local/lib/python3.12/dist-packages
+            - /usr/local/lib/python3.12/site-packages
       - store_artifacts:
           path: junit-reports
           destination: junit-reports
