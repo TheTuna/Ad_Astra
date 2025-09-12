@@ -1,42 +1,44 @@
 version: 2.1
 executors:
-  flask-executor:
+  flask-backend-executor:
+    docker:
+      - image: python/3.12.11-alpine3.22
+  flask-frontend:
     docker:
       - image: mcr.microsoft.com/playwright/python:v1.55.0-noble
 jobs:
   backend_test:
-    executor: flask-executor
+    executor: flask-backend-executor
     steps:
       - checkout
       - restore_cache:
           keys:
-            - ad-astra-${CIRCLE_BRANCH}-{{checksum "requirements.txt"}}
+            - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
       - run:
           name: Install Flask App Rquirements
           command: pip3 install -r requirements.txt
       - run:
-          name: pip location
-          command: pip show flask
-      - run:
-          name: Echo vars
-          command: touch ${CIRCLE_BRANCH}-${CIRCLE_WORKFLOW_JOB_ID}
-      - run:
-          name: echo vars 2
-          command: touch $(echo CIRCLE_BRANCH)-$(echo CIRCLE_WORKFLOW_JOB_ID)
-      - run:
-          name: check filename
-          command: ls -la .
-         
-      - run:
-          name: Run Backend tests
-          command: pytest --maxfail=1 --junitxml=report-${CIRCLE_JOB}-${CIRCLE_WORKFLOW_JOB_ID}
+          name: Run Backend Tests
+          command: pytest --maxfail=1 --junitxml=report-$(echo CIRCLE_JOB)-$(echo CIRCLE_WORKFLOW_JOB_ID) tests/test_backend.py
       - save_cache:
-          key: ad-astra-${CIRCLE_BRANCH}-{{checksum "requirements.txt"}}
+          key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
           paths:
             - /usr/local/lib/python3.12/dist-packages
+
+  frontend_test:
+    executor: flask-frontend
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
+      - run:
+          name: Run Frontend tTsts
+          command: pytest --maxfail=1 --junitxml=report-$(CIRCLE_JOB)-$(CIRCLE_WORKFLOW_JOB_ID) tests/test_frontend.py
 
 workflows:
   version: 2
   test:
     jobs:
       - backend_test
+      - frontend_test
