@@ -28,8 +28,11 @@ jobs:
       #       playwright install
       #       playwright install-deps
       - run:
-          name: Run Backend Tests
-          command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
+          name: Add Cached Dir To PATH and Run Backend Tests
+          command: |
+            export PATH=/usr/local/lib/python3.12/site-packages:$PATH
+            echo $PATH
+            pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
       - save_cache:
           key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
           paths:
