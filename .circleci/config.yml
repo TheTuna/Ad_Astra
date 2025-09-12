@@ -16,6 +16,8 @@ jobs:
           command: |
             REQUIREMENT_FILE="requirements.txt"
             CURRENT_MD5_=$(md5sum $REQUIREMENT_FILE | awk '{print $1}')
+            echo $CURRENT_MD5
+            echo $REQ_MD5
             if [ "$CURRENT_MD5" != "$REQ_MD5" ]; then
               echo "requirement.txt has changed, installing dependencies"
               pip install --upgrade pip
@@ -27,10 +29,7 @@ jobs:
           name: Show pytest executable dir
           command: pip show pytest playwright
       - run:
-          name:
-          command: ls -l /usr/local/lib/python3.12/site-packages
-      - run:
-          name: Add Cached Dir To PATH and Run Backend Tests
+          name: Run Backend Tests
           command: |
             python3 -m pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
       - save_cache:
