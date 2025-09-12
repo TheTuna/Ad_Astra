@@ -16,7 +16,9 @@ jobs:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
       - run:
           name: Install Flask App Rquirements
-          command: pip3 install -r requirements.txt
+          command: |
+            pip install --upgrade pip
+            pip install -r requirements.txt
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=report-$(echo CIRCLE_JOB)-$(echo CIRCLE_WORKFLOW_JOB_ID) tests/test_backend.py
