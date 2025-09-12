@@ -33,7 +33,7 @@ jobs:
           paths:
             - /usr/local/lib/python3.12/site-packages
       - store_artifacts:
-          path: report-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.CIRCLE_JOB }}-${{ .Environment.CIRCLE_WORKFLOW_JOB_ID }}.xml
+          path: ./report-$(echo $CIRCLE_BRANCH)-$(echo $CIRCLE_JOB)-$(echo $CIRCLE_WORKFLOW_JOB_ID).xml
 
 
   frontend_test:
@@ -47,7 +47,7 @@ jobs:
           name: Run Frontend tTsts
           command: pytest --maxfail=1 --junitxml=report-$(echo $CIRCLE_BRANCH)-$(echo $CIRCLE_JOB)-$(echo $CIRCLE_WORKFLOW_JOB_ID).xml tests/test_frontend.py
       - store_artifacts:
-          path: report-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.CIRCLE_JOB }}-${{ .Environment.CIRCLE_WORKFLOW_JOB_ID }}.xml
+          path: ./report-$(echo $CIRCLE_BRANCH)-$(echo $CIRCLE_JOB)-$(echo $CIRCLE_WORKFLOW_JOB_ID).xml
 
 workflows:
   version: 2
