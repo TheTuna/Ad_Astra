@@ -27,13 +27,16 @@ jobs:
           command: ls -la /usr/local/lib/python3.12/site-packages
       - run:
           name: Run Backend Tests
-          command: pytest --maxfail=1 --junitxml=report-$(echo $CIRCLE_BRANCH)-$(echo $CIRCLE_JOB)-$(echo $CIRCLE_WORKFLOW_JOB_ID).xml tests/test_backend.py
+          command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
       - save_cache:
           key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
           paths:
             - /usr/local/lib/python3.12/site-packages
       - store_artifacts:
-          path: ./report-$(echo $CIRCLE_BRANCH)-$(echo $CIRCLE_JOB)-$(echo $CIRCLE_WORKFLOW_JOB_ID).xml
+          path: junit-reports
+          destination: junit-reports
+      - store_test_results:
+          path: junit-reports
 
 
   frontend_test:
@@ -45,9 +48,12 @@ jobs:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
       - run:
           name: Run Frontend tTsts
-          command: pytest --maxfail=1 --junitxml=report-$(echo $CIRCLE_BRANCH)-$(echo $CIRCLE_JOB)-$(echo $CIRCLE_WORKFLOW_JOB_ID).xml tests/test_frontend.py
+          command: pytest --maxfail=1 ---junitxml=junit-reports/backend_test_report.xml tests/test_frontend.py
       - store_artifacts:
-          path: ./report-$(echo $CIRCLE_BRANCH)-$(echo $CIRCLE_JOB)-$(echo $CIRCLE_WORKFLOW_JOB_ID).xml
+          path: junit-reports
+          destination: junit-reports
+      - store_test_results:
+          path: junit-reports  
 
 workflows:
   version: 2
