@@ -15,7 +15,7 @@ jobs:
           name: Install Flask App Requirements
           command: |
             REQUIREMENT_FILE="requirements.txt"
-            CURRENT_MD5_=$(md5sum $REQUIREMENT_FILE | awk '{print $1}')
+            CURRENT_MD5=$(md5sum $REQUIREMENT_FILE | awk '{print $1}')
             echo $CURRENT_MD5
             echo $REQ_MD5
             if [ "$CURRENT_MD5" != "$REQ_MD5" ]; then
