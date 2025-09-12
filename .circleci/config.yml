@@ -11,19 +11,19 @@ jobs:
       - restore_cache:
           keys:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
-      - run:
-          name: Install Flask App Rquirements
-          command: |
-            pip install --upgrade pip
-            pip install -r requirements.txt
+      # - run:
+      #     name: Install Flask App Rquirements
+      #     command: |
+      #       pip install --upgrade pip
+      #       pip install -r requirements.txt
       - run:
           name: Show pytest executable dir
           command: pip show pytest playwright
-      - run:
-          name: Install Playwright Dependencies
-          command: |
-            playwright install
-            playwright install-deps
+      # - run:
+      #     name: Install Playwright Dependencies
+      #     command: |
+      #       playwright install
+      #       playwright install-deps
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
