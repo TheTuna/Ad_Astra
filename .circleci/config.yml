@@ -23,11 +23,6 @@ jobs:
       - run:
           name:
           command: ls -l /usr/local/lib/python3.12/site-packages
-      # - run:
-      #     name: Install Playwright Dependencies
-      #     command: |
-      #       playwright install
-      #       playwright install-deps
       - run:
           name: Add Cached Dir To PATH and Run Backend Tests
           command: |
@@ -50,6 +45,11 @@ jobs:
       - restore_cache:
           keys:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
+      - run:
+          name: Install Playwright Dependencies
+          command: |
+            python -m playwright install
+            python -m playwright install-deps
       - run:
           name: Run Frontend tTsts
           command: python3 -m pytest --maxfail=1 --junitxml=junit-reports/frontend_test_report.xml tests/test_frontend.py
