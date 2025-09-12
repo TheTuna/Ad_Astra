@@ -16,11 +16,11 @@ jobs:
           command: |
             pip install --upgrade pip
             pip install -r requirements.txt
-      - run:
-          name: Install Playwright Dependencies
-          command: |
-            playwright install
-            playwright install depth
+      # - run:
+      #     name: Install Playwright Dependencies
+      #     command: |
+      #       playwright install
+      #       playwright install depth
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
