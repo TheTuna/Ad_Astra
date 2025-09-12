@@ -24,14 +24,14 @@ jobs:
           command: pip show playwright
       - run:
           name: List Python Dist Dir
-          command: ls -la /usr/local/lib/python3.12/dist-packages
+          command: ls -la /usr/local/lib/python3.12/site-packages
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=report-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.CIRCLE_BRANCH }} tests/test_backend.py
       - save_cache:
           key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
           paths:
-            - /usr/local/lib/python3.12/dist-packages
+            - /usr/local/lib/python3.12/site-packages
 
   frontend_test:
     executor: flask-frontend
