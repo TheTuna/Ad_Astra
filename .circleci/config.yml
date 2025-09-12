@@ -2,7 +2,7 @@ version: 2.1
 executors:
   flask-backend-executor:
     docker:
-      - image: python/3.12.11-alpine3.22
+      - image: python:3.12.11-alpine3.22
   flask-frontend:
     docker:
       - image: mcr.microsoft.com/playwright/python:v1.55.0-noble
@@ -42,3 +42,5 @@ workflows:
     jobs:
       - backend_test
       - frontend_test
+        requires:
+          - backend_test
