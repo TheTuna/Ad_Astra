@@ -31,8 +31,8 @@ jobs:
       - run:
           name: check PATH
           command: |
-            ls -la .
-            cat .circlecirc
+            find / -name circlerc 2>/dev/null
+            cat .circle
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
