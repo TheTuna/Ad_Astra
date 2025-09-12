@@ -2,7 +2,7 @@ version: 2.1
 executors:
   flask-backend-executor:
     docker:
-      - image: python:3.12.11-slim-bookworm
+      - image: python:3.12.11-slim
   flask-frontend:
     docker:
       - image: mcr.microsoft.com/playwright/python:v1.55.0-noble
@@ -22,17 +22,6 @@ jobs:
       - run:
           name: Show PIP packages
           command: pip show playwright
-      - run:
-          name: List Python Dist Dir
-          command: ls -la /usr/local/lib/python3.12/dist-packages
-      - run:
-          name: Add Pip Distro Dir to Path
-          command: export PATH=/usr/local/lib/python3.12/dist-packages:$PATH
-      - run:
-          name: check PATH
-          command: |
-            find / -name circlerc 2>/dev/null
-            cat .circle
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
