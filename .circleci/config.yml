@@ -16,6 +16,9 @@ jobs:
           command: |
             pip install --upgrade pip
             pip install -r requirements.txt
+      - run:
+          name: Show pytest executable dir
+          command: pip show pytest playwright
       # - run:
       #     name: Install Playwright Dependencies
       #     command: |
@@ -42,9 +45,6 @@ jobs:
       - restore_cache:
           keys:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v2.2-{{ checksum "requirements.txt" }}
-      - run:
-          name:
-          command: find /usr/local -name dist-packages
       - run:
           name: Run Frontend tTsts
           command: pytest --maxfail=1 ---junitxml=junit-reports/backend_test_report.xml tests/test_frontend.py
