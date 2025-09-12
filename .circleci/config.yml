@@ -11,12 +11,11 @@ jobs:
       - restore_cache:
           keys:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
-      - run:
-          name: Install Flask App Rquirements
-          command: |
-            pip install --upgrade pip
-            pip install -r requirements.txt
-            which pytest
+      # - run:
+      #     name: Install Flask App Rquirements
+      #     command: |
+      #       pip install --upgrade pip
+      #       pip install -r requirements.txt
       - run:
           name: Show pytest executable dir
           command: pip show pytest playwright
@@ -31,9 +30,7 @@ jobs:
       - run:
           name: Add Cached Dir To PATH and Run Backend Tests
           command: |
-            export PATH=/usr/local/lib/python3.12/site-packages:$PATH
-            echo $PATH
-            pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
+            python3 -m pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
       - save_cache:
           key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
           paths:
