@@ -19,6 +19,9 @@ jobs:
       - run:
           name: Show pytest executable dir
           command: pip show pytest playwright
+      - run:
+          name:
+          command: ls -l /usr/local/lib/python3.12/site-packages
       # - run:
       #     name: Install Playwright Dependencies
       #     command: |
