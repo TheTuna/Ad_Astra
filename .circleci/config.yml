@@ -44,7 +44,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v2.2-{{ checksum "requirements.txt" }}
+            - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
       - run:
           name: Run Frontend tTsts
           command: pytest --maxfail=1 ---junitxml=junit-reports/backend_test_report.xml tests/test_frontend.py
