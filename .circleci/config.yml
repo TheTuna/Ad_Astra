@@ -16,6 +16,7 @@ jobs:
       #     command: |
       #       pip install --upgrade pip
       #       pip install -r requirements.txt
+
       - run:
           name: Show pytest executable dir
           command: pip show pytest playwright
@@ -51,7 +52,7 @@ jobs:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
       - run:
           name: Run Frontend tTsts
-          command: pytest --maxfail=1 ---junitxml=junit-reports/backend_test_report.xml tests/test_frontend.py
+          command: python3 -m pytest --maxfail=1 ---junitxml=junit-reports/backend_test_report.xml tests/test_frontend.py
       - store_artifacts:
           path: junit-reports
           destination: junit-reports
