@@ -8,9 +8,9 @@ jobs:
     executor: flask-executor
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v2.1-{{ checksum "requirements.txt" }}
+      # - restore_cache:
+      #     keys:
+      #       - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v2.1-{{ checksum "requirements.txt" }}
       - run:
           name: Install Flask App Rquirements
           command: |
