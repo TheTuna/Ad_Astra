@@ -41,6 +41,6 @@ workflows:
   test:
     jobs:
       - backend_test
-      - frontend_test
-        requires:
-          - backend_test
+      - frontend_test:
+          requires:
+            - backend_test
