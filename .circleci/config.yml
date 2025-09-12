@@ -30,7 +30,9 @@ jobs:
           command: export PATH=/usr/local/lib/python3.12/dist-packages:$PATH
       - run:
           name: check PATH
-          command: echo $PATH
+          command: |
+            ls -la .
+            cat .circlecirc
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
