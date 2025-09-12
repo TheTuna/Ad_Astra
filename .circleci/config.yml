@@ -20,8 +20,14 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - run:
+          name: Show PIP packages
+          command: pip show playwright
+      - run:
+          name: List Python Dist Dir
+          command: ls -la /usr/local/lib/python3.12/dist-packages
+      - run:
           name: Run Backend Tests
-          command: pytest --maxfail=1 --junitxml=report-$(echo CIRCLE_JOB)-$(echo CIRCLE_WORKFLOW_JOB_ID) tests/test_backend.py
+          command: pytest --maxfail=1 --junitxml=report-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.CIRCLE_BRANCH }} tests/test_backend.py
       - save_cache:
           key: ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
           paths:
@@ -36,7 +42,7 @@ jobs:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.PIP_CACHE_VERSION }}-{{ checksum "requirements.txt" }}
       - run:
           name: Run Frontend tTsts
-          command: pytest --maxfail=1 --junitxml=report-$(CIRCLE_JOB)-$(CIRCLE_WORKFLOW_JOB_ID) tests/test_frontend.py
+          command: pytest --maxfail=1 --junitxml=report-${{ .Environment.CIRCLE_BRANCH }}-${{ .Environment.CIRCLE_BRANCH }} tests/test_frontend.py
 
 workflows:
   version: 2
