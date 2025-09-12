@@ -20,7 +20,7 @@ jobs:
           name: Install Playwright Dependencies
           command: |
             playwright install
-            playwright install depth
+            playwright install-deps
       - run:
           name: Run Backend Tests
           command: pytest --maxfail=1 --junitxml=junit-reports/backend_test_report.xml tests/test_backend.py
