@@ -11,12 +11,18 @@ jobs:
       - restore_cache:
           keys:
             - ad-astra-${{ .Environment.CIRCLE_BRANCH }}-v3-{{ checksum "requirements.txt" }}
-      # - run:
-      #     name: Install Flask App Rquirements
-      #     command: |
-      #       pip install --upgrade pip
-      #       pip install -r requirements.txt
-
+      - run:
+          name: Install Flask App Requirements
+          command: |
+            REQUIREMENT_FILE="requirements.txt"
+            CURRENT_MD5_=$(md5sum $REQUIREMENT_FILE | awk '{print $1}')
+            if [ "$CURRENT_MD5" != "$REQ_MD5" ]; then
+              echo "requirement.txt has changed, installing dependencies"
+              pip install --upgrade pip
+              pip install -r requirements.txt
+            else
+              echo "requirements.txt has not changed. skipping dependencies installation"
+            fi
       - run:
           name: Show pytest executable dir
           command: pip show pytest playwright
